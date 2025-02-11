@@ -27,3 +27,16 @@ async function getAnimeMappings(anilistId) {
 }
 
 module.exports = { getAnimeMappings };
+async function getAnilistToken(code) {
+    const response = await axios.post("https://anilist.co/api/v2/oauth/token", {
+        grant_type: "authorization_code",
+        client_id: process.env.ANILIST_CLIENT_ID,
+        client_secret: process.env.ANILIST_CLIENT_SECRET,
+        redirect_uri: process.env.REDIRECT_URI,
+        code
+    });
+
+    return response.data.access_token;
+}
+
+module.exports = { getAnimeMappings, getAnilistToken };
